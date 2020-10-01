@@ -3,7 +3,7 @@ const moment = require('moment')
 const fs = require('fs')
 // moment.utc().startOf('day')
 async function bestByOrderToday() {
-    let output = { order100: [], order50: [], order10: [] }
+    let output = { order100: '', order50: '', order10: '' }
     let results = await Ads.find({
         orders: {
             $not: {
@@ -56,7 +56,7 @@ async function bestByOrderToday() {
 }
 
 async function bestByOrderYesterday() {
-    let output = { order100: [], order50: [], order10: [] }
+    let output = { order100: '', order50: '', order10: '' }
     let results = await Ads.find({
         orders: {
             $not: {
@@ -112,7 +112,7 @@ async function bestByOrderYesterday() {
 }
 
 async function bestByReactToday() {
-    let output = { react7000: [], react3000: [], react1000: [], react1000: [], react500: [] }
+    let output = { react7000: '', react3000: '', react1000: '', react1000: '', react500: '' }
 
     // 7000
     let results = await Ads.find({
@@ -129,7 +129,7 @@ async function bestByReactToday() {
     console.log("Best By React Today 7000 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
     output.react7000 = results
-    
+
     // 3000
     results = await Ads.find({
         tracking_time_arr: {
@@ -182,7 +182,7 @@ async function bestByReactToday() {
 }
 
 async function bestByReactYesterday() {
-    let output = { react7000: [], react3000: [], react1000: [], react1000: [], react500: [] }
+    let output = { react7000: '', react3000: '', react1000: '', react1000: '', react500: '' }
     // 7000
     let results = await Ads.find({
         tracking_time_arr: {
@@ -250,4 +250,5 @@ async function bestByReactYesterday() {
 
     return output
 }
+
 module.exports = { bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday }
