@@ -3,6 +3,7 @@ const moment = require('moment')
 const fs = require('fs')
 // moment.utc().startOf('day')
 async function bestByOrderToday() {
+    let output = { order100: '', order50: '', order10: '' }
     let results = await Ads.find({
         orders: {
             $not: {
@@ -18,11 +19,7 @@ async function bestByOrderToday() {
         });
     console.log("Best By Order Today 100 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByOrderToday100.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.order100 = results
     results = await Ads.find({
         orders: {
             $not: {
@@ -38,12 +35,7 @@ async function bestByOrderToday() {
         });
     console.log("Best By Order Today 50 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByOrderToday50.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
-
+    output.order50 = results
     results = await Ads.find({
         orders: {
             $not: {
@@ -59,14 +51,12 @@ async function bestByOrderToday() {
         });
     console.log("Best By Order Today 10 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByOrderToday10.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.order10 = results
+    return output
 }
 
 async function bestByOrderYesterday() {
+    let output = { order100: '', order50: '', order10: '' }
     let results = await Ads.find({
         orders: {
             $not: {
@@ -82,11 +72,8 @@ async function bestByOrderYesterday() {
         });
     console.log("Best By Order Yesterday 100 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByOrderYesterday100.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.order100 = results
+
     results = await Ads.find({
         orders: {
             $not: {
@@ -102,11 +89,7 @@ async function bestByOrderYesterday() {
         });
     console.log("Best By Order Yesterday 50 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByOrderYesterday50.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.order50 = results
 
     results = await Ads.find({
         orders: {
@@ -124,14 +107,13 @@ async function bestByOrderYesterday() {
 
     console.log("Best By Order Yesterday 10 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByOrderYesterday10.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.order10 = results
+
 }
 
 async function bestByReactToday() {
+    let output = { react7000: '', react3000: '', react1000: '', react1000: '', react500: '' }
+
     // 7000
     let results = await Ads.find({
         tracking_time_arr: {
@@ -146,11 +128,8 @@ async function bestByReactToday() {
 
     console.log("Best By React Today 7000 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByReactToday7000.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.react7000 = results
+
     // 3000
     results = await Ads.find({
         tracking_time_arr: {
@@ -165,11 +144,8 @@ async function bestByReactToday() {
 
     console.log("Best By React Today 3000 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByReactToday3000.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.react3000 = results
+
     // 1000
     results = await Ads.find({
         tracking_time_arr: {
@@ -184,11 +160,7 @@ async function bestByReactToday() {
 
     console.log("Best By React Today 1000 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByReactToday1000.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.react1000 = results
 
     // 500
     results = await Ads.find({
@@ -203,17 +175,14 @@ async function bestByReactToday() {
             reactions: -1
         });
 
-
     console.log("Best By React Today 500 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByReactToday500.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.react500 = results
+    return output
 }
 
 async function bestByReactYesterday() {
+    let output = { react7000: '', react3000: '', react1000: '', react1000: '', react500: '' }
     // 7000
     let results = await Ads.find({
         tracking_time_arr: {
@@ -228,11 +197,8 @@ async function bestByReactYesterday() {
 
     console.log("Best By React Yesterday 7000 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByReactYesterday7000.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.react7000 = results
+
     // 3000
     results = await Ads.find({
         tracking_time_arr: {
@@ -247,11 +213,8 @@ async function bestByReactYesterday() {
 
     console.log("Best By React Yesterday 3000 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByReactYesterday3000.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.react3000 = results
+
     // 1000
     results = await Ads.find({
         tracking_time_arr: {
@@ -266,11 +229,7 @@ async function bestByReactYesterday() {
 
     console.log("Best By React Yesterday 1000 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByReactYesterday1000.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.react1000 = results
 
     // 500
     results = await Ads.find({
@@ -285,13 +244,11 @@ async function bestByReactYesterday() {
             reactions: -1
         });
 
-
     console.log("Best By React Yesterday 500 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
-    await fs.writeFile('bestByReactYesterday500.txt', results, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.", err);
-        }
-    });
+    output.react500 = results
+
+    return output
 }
+
 module.exports = { bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday }

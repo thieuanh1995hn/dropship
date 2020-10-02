@@ -1,16 +1,17 @@
-const service = require('./service')
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const { url } = require('./config')
+const port = 3000
+const { app } = require('./router')
+require('./sequence')
 
 const start = async () => {
   await mongoose.connect(url, { useNewUrlParser: true });
-  const db = mongoose.connection;
-  await service.bestByOrderToday();
-  await service.bestByOrderYesterday()
-  await service.bestByReactToday()
-  await service.bestByReactYesterday()
-
-  db.close()
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+  })
 }
+
 
 start();
