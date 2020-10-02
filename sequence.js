@@ -10,7 +10,6 @@ async function alertNewBestByOrderToday() {
         r.order50 = r.order50.split(',')
         r.order10 = r.order10.split(',')
         if (orderToday) {
-            console.log(r)
             _old = [...orderToday.order100, ...orderToday.order50, ...orderToday.order10]
             _new = []
             for (let post_id of [...r.order100, ...r.order50, ...r.order10]) {
