@@ -108,7 +108,7 @@ async function bestByOrderYesterday() {
     console.log("Best By Order Yesterday 10 Size:", results.length)
     results = results.map(elm => `${elm.post_id}`).join(',')
     output.order10 = results
-
+    return output
 }
 
 async function bestByReactToday() {
