@@ -23,7 +23,7 @@ async function alertNewBestByOrderToday() {
                 console.log("Chay vao day")
                 await axios.post("https://slack.com/api/chat.postMessage", {
                     channel: config.slackBotChanel,
-                    text: `Sếp ơi có ads xịn xò :point_right: ${_new.join(',')}`,
+                    text: `Sếp ơi có ads xịn xò ạ! :point_right: ${_new.join(',')}`,
                     username: 'Đệ tử ruột',
                     icon_url: "https://ca.slack-edge.com/T01CH5MVANL-U01BTC2K7L2-0a745d8aaeed-48"
                 }, {
