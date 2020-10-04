@@ -20,4 +20,15 @@ async function bestByReactYesterday(req, res) {
     res.send(output)
 }
 
-module.exports = { bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday }
+async function bestByOrderReactToday(req, res) {
+    let output = await service.bestByOrderReactToday()
+    res.send(output)
+}
+
+async function bestByOrderReactYesterday(req, res) {
+    let output = await service.bestByOrderReactYesterday()
+    res.send(output)
+}
+
+
+module.exports = { bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday, bestByOrderReactToday, bestByOrderReactYesterday }

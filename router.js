@@ -10,4 +10,8 @@ app.get('/react-today', controller.bestByReactToday)
 
 app.get('/react-yesterday', controller.bestByReactYesterday)
 
+app.get('/order-react-today', controller.bestByOrderReactToday)
+
+app.get('/order-react-yesterday', controller.bestByOrderReactYesterday)
+
 module.exports = { app }
