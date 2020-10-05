@@ -39,10 +39,10 @@ async function alertNewBestByOrderToday() {
             }
         }
         orderToday = r
-        setTimeout(alertNewBestByOrderToday, 1800000);
+        setTimeout(alertNewBestByOrderToday, 300000);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertNewBestByOrderToday, 1800000);
+        setTimeout(alertNewBestByOrderToday, 300000);
     }
 }
 
@@ -89,10 +89,10 @@ async function alertNewBestOrderReactToday() {
             }
         }
         orderReactToday = r
-        setTimeout(alertNewBestOrderReactToday, 1800000);
+        setTimeout(alertNewBestOrderReactToday, 300000);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertNewBestOrderReactToday, 1800000);
+        setTimeout(alertNewBestOrderReactToday, 300000);
     }
 }
 
@@ -125,10 +125,10 @@ async function alertReactCrawlDone() {
             })
         }
         reactToday = r
-        setTimeout(alertReactCrawlDone, 1800000);
+        setTimeout(alertReactCrawlDone, 300000);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertReactCrawlDone, 1800000);
+        setTimeout(alertReactCrawlDone, 300000);
     }
 
 }
