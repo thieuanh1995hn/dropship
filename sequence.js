@@ -3,12 +3,12 @@ const axios = require('axios')
 const config = require('./config')
 const { Ads } = require('./model')
 const moment = require('moment')
+const fs = require('fs')
 
 let orderToday = null
 let reactToday = null
 let orderReactToday = null
-
-async function alertNewBestByOrderToday() {
+async function alertNewBestByOrderToday(time) {
     try {
         let r = await service.bestByOrderToday()
         r.order100 = r.order100.split(',')
@@ -24,7 +24,7 @@ async function alertNewBestByOrderToday() {
             console.log("New > 50 order: ", _new.length)
             if (_new.length > 0) {
                 // send message to slack
-                console.log("Chay vao day")
+
                 await axios.post("https://slack.com/api/chat.postMessage", {
                     channel: "order",
                     text: `Sếp ơi ads theo order :point_right: ${_new.join(',')}`,
@@ -39,14 +39,14 @@ async function alertNewBestByOrderToday() {
             }
         }
         orderToday = r
-        setTimeout(alertNewBestByOrderToday, 1800000);
+        setTimeout(alertNewBestByOrderToday, time);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertNewBestByOrderToday, 1800000);
+        setTimeout(alertNewBestByOrderToday, time);
     }
 }
 
-async function alertNewBestOrderReactToday() {
+async function alertNewBestOrderReactToday(time) {
     try {
         let r = await Ads.find({
             orders: {
@@ -74,7 +74,7 @@ async function alertNewBestOrderReactToday() {
             console.log("New > 50 order: ", _new.length)
             if (_new.length > 0) {
                 // send message to slack
-                console.log("Chay vao day")
+
                 await axios.post("https://slack.com/api/chat.postMessage", {
                     channel: "order-react",
                     text: `Sếp ơi ads theo react và order :point_right: ${_new.join(',')}`,
@@ -89,14 +89,14 @@ async function alertNewBestOrderReactToday() {
             }
         }
         orderReactToday = r
-        setTimeout(alertNewBestOrderReactToday, 300000);
+        setTimeout(alertNewBestOrderReactToday, time);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertNewBestOrderReactToday, 300000);
+        setTimeout(alertNewBestOrderReactToday, time);
     }
 }
 
-async function alertReactCrawlDone() {
+async function alertReactCrawlDone(time) {
     try {
         let r = await Ads.find({
             tracking_time_arr: {
@@ -125,14 +125,66 @@ async function alertReactCrawlDone() {
             })
         }
         reactToday = r
-        setTimeout(alertReactCrawlDone, 300000);
+        setTimeout(alertReactCrawlDone, time);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertReactCrawlDone, 300000);
+        setTimeout(alertReactCrawlDone, time);
     }
 
 }
 
-alertNewBestByOrderToday();
-alertReactCrawlDone();
-alertNewBestOrderReactToday();
+async function alertOver1000react50order(time) {
+    try {
+        let r = await Ads.find({
+            $or: [{ last_yesterday: { $gte: 50 } }, { last_order: { $gte: 50 } }],
+            reactions: { $gte: 1000 },
+            post_date: {
+                $gte: moment.utc().startOf('day').subtract(14, 'days').toDate().getTime() / 1000
+                , $lte: moment.utc().startOf('day').toDate().getTime() / 1000
+            }
+        }, { post_id: 1 })
+            .sort({
+                reactions: -1
+            });
+        r = r.map(elm => elm.post_id)
+        let over1000react50order = fs.readFileSync('over1000react50order.txt','utf8');
+        if (over1000react50order) {
+            let _new = []
+            over1000react50order = over1000react50order.split(',')
+            for (let post_id of r) {
+                if (!over1000react50order.includes(post_id)) {
+                    _new.push(post_id)
+                }
+            }
+            if (_new.length > 0) {
+                // send message to slack
+                await axios.post("https://slack.com/api/chat.postMessage", {
+                    channel: "1000-50",
+                    text: `Sếp ơi ads 1000-50 :point_right: ${_new.join(',')}`,
+                    username: 'Đệ tử ruột',
+                    icon_url: "https://ca.slack-edge.com/T01CH5MVANL-U01BTC2K7L2-0a745d8aaeed-48"
+                }, {
+                    headers: {
+                        "Authorization": config.slackBotAPIkey,
+                        'Content-Type': 'application/json',
+                    }
+                })
+            }
+
+        }
+        fs.writeFileSync('over1000react50order.txt', r.join(','));
+        over1000react50order = r
+        setTimeout(alertOver1000react50order, time);
+
+    }
+    catch (e) {
+        console.error(e.stack)
+        setTimeout(alertOver1000react50order, time);
+    }
+
+}
+
+alertNewBestByOrderToday(1800000);
+alertReactCrawlDone(300000);
+alertNewBestOrderReactToday(300000);
+alertOver1000react50order(300000);
