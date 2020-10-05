@@ -39,10 +39,10 @@ async function alertNewBestByOrderToday() {
             }
         }
         orderToday = r
-        setTimeout(alertNewBestByOrderToday, 300000);
+        setTimeout(alertNewBestByOrderToday, 1800000);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertNewBestByOrderToday, 300000);
+        setTimeout(alertNewBestByOrderToday, 1800000);
     }
 }
 
