@@ -21,7 +21,6 @@ async function alertNewBestByOrderToday(time) {
                     _new.push(post_id)
                 }
             }
-            console.log("New > 50 order: ", _new.length)
             if (_new.length > 0) {
                 // send message to slack
 
@@ -39,10 +38,10 @@ async function alertNewBestByOrderToday(time) {
             }
         }
         orderToday = r
-        setTimeout(alertNewBestByOrderToday, time);
+        setTimeout(() => alertNewBestByOrderToday(time), time);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertNewBestByOrderToday, time);
+        setTimeout(() => alertNewBestByOrderToday(time), time);
     }
 }
 
@@ -71,7 +70,6 @@ async function alertNewBestOrderReactToday(time) {
                     _new.push(post_id)
                 }
             }
-            console.log("New > 50 order: ", _new.length)
             if (_new.length > 0) {
                 // send message to slack
 
@@ -89,10 +87,10 @@ async function alertNewBestOrderReactToday(time) {
             }
         }
         orderReactToday = r
-        setTimeout(alertNewBestOrderReactToday, time);
+        setTimeout(() => alertNewBestOrderReactToday(time), time);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertNewBestOrderReactToday, time);
+        setTimeout(() => alertNewBestOrderReactToday(time), time);
     }
 }
 
@@ -125,10 +123,10 @@ async function alertReactCrawlDone(time) {
             })
         }
         reactToday = r
-        setTimeout(alertReactCrawlDone, time);
+        setTimeout(() => alertReactCrawlDone(time), time);
     } catch (e) {
         console.error(e.stack)
-        setTimeout(alertReactCrawlDone, time);
+        setTimeout(() => alertReactCrawlDone(time), time);
     }
 
 }
@@ -147,7 +145,7 @@ async function alertOver1000react50order(time) {
                 reactions: -1
             });
         r = r.map(elm => elm.post_id)
-        let over1000react50order = fs.readFileSync('over1000react50order.txt','utf8');
+        let over1000react50order = fs.readFileSync('over1000react50order.txt', 'utf8');
         if (over1000react50order) {
             let _new = []
             over1000react50order = over1000react50order.split(',')
@@ -174,16 +172,14 @@ async function alertOver1000react50order(time) {
         }
         fs.writeFileSync('over1000react50order.txt', r.join(','));
         over1000react50order = r
-        setTimeout(alertOver1000react50order, time);
-
+        setTimeout(() => alertOver1000react50order(time), time);
     }
     catch (e) {
         console.error(e.stack)
-        setTimeout(alertOver1000react50order, time);
+        setTimeout(() => alertOver1000react50order(time), time);
     }
 
 }
-
 alertNewBestByOrderToday(1800000);
 alertReactCrawlDone(300000);
 alertNewBestOrderReactToday(300000);

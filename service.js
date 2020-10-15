@@ -287,7 +287,7 @@ async function bestByOrderReactYesterday() {
                 }
             }
         },
-        last_yesterday: { $gte: 50 },
+        $or: [{ last_yesterday: { $gte: 50 } }, { last_order: { $gte: 50 } }],
         reactions: { $gte: 1000 },
     }, { post_id: 1 })
         .sort({
