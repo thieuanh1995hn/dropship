@@ -13,7 +13,7 @@ async function checkUnseenOrderToday(req, res) {
         output.order100 = output.order100 ? output.order100.join(",") : ''
         output.order50 =  output.order50 ? output.order50.join(",") : ''
     }
-    res.send(output)
+    res.send({...output})
 }
 
 async function clearUnseenOrderToday(req, res) {
@@ -58,7 +58,7 @@ async function checkUnseenReactToday(req, res) {
         output.react1000 = output.react1000 ? output.react1000.join(",") : ''
         output.react500 = output.react500 ? output.react500.join(",") : ''
     }
-    res.send(output)
+    res.send({...output})
 }
 
 async function clearUnseenReactToday(req, res) {
