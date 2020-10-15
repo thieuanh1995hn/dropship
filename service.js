@@ -1,6 +1,5 @@
 const { Ads } = require('./model')
 const moment = require('moment')
-const fs = require('fs')
 // moment.utc().startOf('day')
 async function bestByOrderToday() {
     let output = { order100: '', order50: '', order10: '' }
@@ -17,7 +16,6 @@ async function bestByOrderToday() {
         .sort({
             last_order: -1
         });
-    console.log("Best By Order Today 100 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.order100 = results
     results = await Ads.find({
@@ -33,7 +31,6 @@ async function bestByOrderToday() {
         .sort({
             last_order: -1
         });
-    console.log("Best By Order Today 50 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.order50 = results
     results = await Ads.find({
@@ -49,7 +46,6 @@ async function bestByOrderToday() {
         .sort({
             last_order: -1
         });
-    console.log("Best By Order Today 10 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.order10 = results
     return output
@@ -70,7 +66,6 @@ async function bestByOrderYesterday() {
         .sort({
             last_yesterday: -1
         });
-    console.log("Best By Order Yesterday 100 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.order100 = results
 
@@ -87,7 +82,6 @@ async function bestByOrderYesterday() {
         .sort({
             last_yesterday: -1
         });
-    console.log("Best By Order Yesterday 50 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.order50 = results
 
@@ -105,7 +99,6 @@ async function bestByOrderYesterday() {
             last_yesterday: -1
         });
 
-    console.log("Best By Order Yesterday 10 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.order10 = results
     return output
@@ -126,7 +119,6 @@ async function bestByReactToday() {
             reactions: -1
         });
 
-    console.log("Best By React Today 7000 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.react7000 = results
 
@@ -142,7 +134,6 @@ async function bestByReactToday() {
             reactions: -1
         });
 
-    console.log("Best By React Today 3000 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.react3000 = results
 
@@ -158,7 +149,6 @@ async function bestByReactToday() {
             reactions: -1
         });
 
-    console.log("Best By React Today 1000 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.react1000 = results
 
@@ -175,7 +165,6 @@ async function bestByReactToday() {
             reactions: -1
         });
 
-    console.log("Best By React Today 500 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.react500 = results
     return output
@@ -195,7 +184,6 @@ async function bestByReactYesterday() {
             reactions: -1
         });
 
-    console.log("Best By React Yesterday 7000 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.react7000 = results
 
@@ -211,7 +199,6 @@ async function bestByReactYesterday() {
             reactions: -1
         });
 
-    console.log("Best By React Yesterday 3000 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.react3000 = results
 
@@ -227,7 +214,6 @@ async function bestByReactYesterday() {
             reactions: -1
         });
 
-    console.log("Best By React Yesterday 1000 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.react1000 = results
 
@@ -244,7 +230,6 @@ async function bestByReactYesterday() {
             reactions: -1
         });
 
-    console.log("Best By React Yesterday 500 Size:", results.length)
     results = results.map(elm => elm.post_id).join(',')
     output.react500 = results
 
@@ -270,7 +255,6 @@ async function bestByOrderReactToday() {
         });
 
 
-    console.log("Best By Order-React Yesterday Size:", results.length)
     output = results.map(elm => elm.post_id).join(',')
     return output
 }
@@ -295,7 +279,6 @@ async function bestByOrderReactYesterday() {
         });
 
 
-    console.log("Best By Order-React Yesterday Size:", results.length)
     output = results.map(elm => elm.post_id).join(',')
     return output
 }
