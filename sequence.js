@@ -180,6 +180,31 @@ async function alertOver1000react50order(time) {
     }
 
 }
+
+async function alertNewReactAds(time) {
+    try {
+        let r = await Ads.find({
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+                    }
+                }
+            },
+            reactions: { $gte: 1000 },
+        }, { post_id: 1 })
+            .sort({
+                reactions: -1
+            });
+        r = r.map(elm => elm.post_id)
+        let newReact = fs.readFileSync('newReact.txt', 'utf8');
+
+    } catch (e) {
+
+    }
+}
+
+
 alertNewBestByOrderToday(1800000);
 alertReactCrawlDone(300000);
 alertNewBestOrderReactToday(300000);
