@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { db_url } = require('./config')
 const port = 3000
 const { app } = require('./router')
-require('./sequence')
+// require('./sequence')
 
 const start = async () => {
   await mongoose.connect(db_url, { useNewUrlParser: true });

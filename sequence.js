@@ -186,5 +186,5 @@ async function alertOver1000react50order(time) {
 
 alertNewBestByOrderToday(1800000);
 alertReactCrawlDone(300000);
-alertNewBestOrderReactToday(300000);
-alertOver1000react50order(300000);
+alertNewBestOrderReactToday(1800000);
+alertOver1000react50order(1800000);
