@@ -11,9 +11,9 @@ async function checkUnseenOrderToday(req, res) {
     if (output) {
         output = JSON.parse(output)
         output.order100 = output.order100 ? output.order100.join(",") : ''
-        output.order50 =  output.order50 ? output.order50.join(",") : ''
+        output.order50 = output.order50 ? output.order50.join(",") : ''
     }
-    res.send({...output})
+    res.send({ ...output })
 }
 
 async function clearUnseenOrderToday(req, res) {
@@ -58,7 +58,7 @@ async function checkUnseenReactToday(req, res) {
         output.react1000 = output.react1000 ? output.react1000.join(",") : ''
         output.react500 = output.react500 ? output.react500.join(",") : ''
     }
-    res.send({...output})
+    res.send({ ...output })
 }
 
 async function clearUnseenReactToday(req, res) {
@@ -77,6 +77,10 @@ async function bestByOrderReactYesterday(req, res) {
     res.send({ result: output })
 }
 
+async function get1000react50order(req, res) {
+    let output = await fs.readFileSync('db/over1000react50orderAll.txt', 'utf-8')
+    res.send({ result: output })
+}
 async function checkUnseen1000react50order(req, res) {
     let output = await fs.readFileSync('db/over1000react50order.txt', 'utf-8')
     res.send({ result: output })
@@ -88,9 +92,11 @@ async function clearUnseen1000react50order(req, res) {
 }
 
 
+
+
 module.exports = {
     bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday,
     bestByOrderReactToday, bestByOrderReactYesterday, clearUnseen1000react50order,
     checkUnseen1000react50order, checkUnseenOrderToday, clearUnseenOrderToday, checkUnseenOrderReactToday,
-    clearUnseenOrderReactToday, checkUnseenReactToday, clearUnseenReactToday
+    clearUnseenOrderReactToday, checkUnseenReactToday, clearUnseenReactToday,get1000react50order
 }
