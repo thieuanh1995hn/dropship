@@ -4,6 +4,7 @@ const config = require('./config')
 const { Ads } = require('./model')
 const moment = require('moment')
 const fs = require('fs')
+let reactToday = ''
 
 async function alertNewBestByOrderToday(time) {
     try {
@@ -14,19 +15,19 @@ async function alertNewBestByOrderToday(time) {
         let orderToday = fs.readFileSync('db/orderTodayALL.json', 'utf8');
         if (orderToday) {
             orderToday = JSON.parse(orderToday)
-            _old = [...orderToday.order100, ...orderToday.order50]
             let _new = fs.readFileSync('db/orderToday.json', 'utf8')
             if (_new) {
                 _new = JSON.parse(_new)
             }
             _new = { order100: [], order50: [], ..._new }
             for (let post_id of r.order100) {
-                if (!_old.includes(post_id)) {
+                if (!r.order100.includes(post_id)) {
                     _new.order100.push(post_id)
+                    _new.order50.filter(elm => elm !== post_id)
                 }
             }
             for (let post_id of r.order50) {
-                if (!_old.includes(post_id)) {
+                if (!r.order50.includes(post_id)) {
                     _new.order50.push(post_id)
                 }
             }
@@ -91,7 +92,7 @@ async function alertNewBestByReactToday(time) {
                     _new.react500.push(post_id)
                 }
             }
-            if (_new.react7000.length > 0 || _new.react3000.length > 0 || _new.react1000.length > 0|| _new.react500.length > 0) {
+            if (_new.react7000.length > 0 || _new.react3000.length > 0 || _new.react1000.length > 0 || _new.react500.length > 0) {
                 fs.writeFileSync('db/reactToday.json', JSON.stringify(_new));
             }
         }
@@ -243,7 +244,7 @@ async function alertReactCrawlDone(time) {
 
 
 alertNewBestByOrderToday(5000);
-// alertReactCrawlDone(300000);
+alertReactCrawlDone(30000);
 alertNewBestOrderReactToday(5000);
 alertOver1000react50order(5000);
-alertNewBestByReactToday(1000)
+alertNewBestByReactToday(5000)
