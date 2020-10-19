@@ -21,13 +21,13 @@ async function alertNewBestByOrderToday(time) {
             }
             _new = { order100: [], order50: [], ..._new }
             for (let post_id of r.order100) {
-                if (!r.order100.includes(post_id)) {
+                if (!orderToday.order100.includes(post_id)) {
                     _new.order100.push(post_id)
                     _new.order50.filter(elm => elm !== post_id)
                 }
             }
             for (let post_id of r.order50) {
-                if (!r.order50.includes(post_id)) {
+                if (!orderToday.order50.includes(post_id)) {
                     _new.order50.push(post_id)
                 }
             }
@@ -64,8 +64,9 @@ async function alertNewBestByReactToday(time) {
         r.react500 = r.react500.split(',').filter(elm => !!elm)
         let reactToday = fs.readFileSync('db/reactTodayALL.json', 'utf8');
         if (reactToday) {
-            reactToday = JSON.parse(orderToday)
-            _old = [...orderToday.react7000, ...orderToday.react3000, ...orderToday.react1000, ...orderToday.react500]
+            reactToday = JSON.parse(reactToday)
+            _old = [...reactToday.react7000, ...reactToday.react3000, ...reactToday.react1000, ...reactToday.react500]
+
             let _new = fs.readFileSync('db/reactToday.json', 'utf8')
             if (_new) {
                 _new = JSON.parse(_new)
@@ -156,27 +157,19 @@ async function alertNewBestOrderReactToday(time) {
 
 async function alertOver1000react50order(time) {
     try {
-        let r = await Ads.find({
-            $or: [{ last_yesterday: { $gte: 50 } }, { last_order: { $gte: 50 } }],
-            reactions: { $gte: 1000 },
-            post_date: {
-                $gte: moment.utc().startOf('day').subtract(21, 'days').toDate().getTime() / 1000
-                , $lte: moment.utc().startOf('day').toDate().getTime() / 1000
-            }
-        }, { post_id: 1 })
-            .sort({
-                reactions: -1
-            });
-        r = r.map(elm => elm.post_id)
+        let r = await service.best1000react50order()
+        r = r.split(',').filter(elm => !!elm)
         let over1000react50orderAll = fs.readFileSync('db/over1000react50orderALL.txt', 'utf8');
         if (over1000react50orderAll) {
             let _new = fs.readFileSync('db/over1000react50order.txt', 'utf8').split(',').filter(elm => !!elm);
             over1000react50orderAll = over1000react50orderAll.split(',')
+
             for (let post_id of r) {
                 if (!over1000react50orderAll.includes(post_id)) {
                     _new.push(post_id)
                 }
             }
+            
             if (_new.length > 0) {
                 // send message to slack
                 // await axios.post("https://slack.com/api/chat.postMessage", {
@@ -203,7 +196,46 @@ async function alertOver1000react50order(time) {
 
 }
 
+async function alertBestReactChange(time) {
+    try {
+        let r = await service.bestReactChange()
+        r = r.split(',').filter(elm => !!elm)
+        let reactChangeALL = fs.readFileSync('db/reactChangeALL.txt', 'utf8');
+        if (reactChangeALL) {
+            let _new = fs.readFileSync('db/reactChange.txt', 'utf8').split(',').filter(elm => !!elm);
+            reactChangeALL = reactChangeALL.split(',')
 
+            for (let post_id of r) {
+                if (!reactChangeALL.includes(post_id)) {
+                    _new.push(post_id)
+                }
+            }
+            
+            if (_new.length > 0) {
+                // send message to slack
+                // await axios.post("https://slack.com/api/chat.postMessage", {
+                //     channel: "1000-50",
+                //     text: `Sếp ơi ads 1000-50 :point_right: ${_new.join(',')}`,
+                //     username: 'Đệ tử ruột',
+                //     icon_url: "https://ca.slack-edge.com/T01CH5MVANL-U01BTC2K7L2-0a745d8aaeed-48"
+                // }, {
+                //     headers: {
+                //         "Authorization": config.slackBotAPIkey,
+                //         'Content-Type': 'application/json',
+                //     }
+                // })
+                fs.writeFileSync('db/reactChange.txt', _new.join(','));
+            }
+        }
+        fs.writeFileSync('db/reactChangeALL.txt', r.join(','));
+        setTimeout(() => alertBestReactChange(time), time);
+    }
+    catch (e) {
+        console.error(e.stack)
+        setTimeout(() => alertBestReactChange(time), time);
+    }
+
+}
 
 async function alertReactCrawlDone(time) {
     try {
@@ -243,8 +275,9 @@ async function alertReactCrawlDone(time) {
 }
 
 
-alertNewBestByOrderToday(60000);
-alertReactCrawlDone(60000);
-alertNewBestOrderReactToday(60000);
-alertOver1000react50order(60000);
-alertNewBestByReactToday(60000)
+// alertNewBestByOrderToday(60000);
+// alertReactCrawlDone(60000);
+// alertNewBestOrderReactToday(60000);
+// alertOver1000react50order(60000);
+// alertNewBestByReactToday(60000)
+alertBestReactChange(2000)

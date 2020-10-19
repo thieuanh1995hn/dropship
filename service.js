@@ -259,7 +259,6 @@ async function bestByOrderReactToday() {
     return output
 }
 
-
 async function bestByOrderReactYesterday() {
     let output = ''
     // 7000
@@ -277,9 +276,56 @@ async function bestByOrderReactYesterday() {
         .sort({
             reactions: -1
         });
-
-
     output = results.map(elm => elm.post_id).join(',')
     return output
 }
-module.exports = { bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday, bestByOrderReactToday, bestByOrderReactYesterday }
+
+async function best1000react50order() {
+    let r = await Ads.find({
+        $or: [{ last_yesterday: { $gte: 50 } }, { last_order: { $gte: 50 } }],
+        reactions: { $gte: 1000 },
+        post_date: {
+            $gte: moment.utc().startOf('day').subtract(21, 'days').toDate().getTime() / 1000
+            , $lte: moment.utc().startOf('day').toDate().getTime() / 1000
+        }
+    }, { post_id: 1 })
+        .sort({
+            reactions: -1
+        });
+    r = r.map(elm => elm.post_id).join(',')
+    return r
+}
+
+async function bestReactChange() {
+    let r = await Ads.aggregate([
+        {
+            $match: {
+                post_date: {
+                    $gte: moment.utc().startOf('day').subtract(21, 'days').toDate().getTime() / 1000
+                    , $lte: moment.utc().startOf('day').toDate().getTime() / 1000
+                },
+                action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
+            }
+        },
+        {
+            $project: {
+                post_id: 1,
+                react1: { $arrayElemAt: ["$reactions_arr", -2] },
+                react2: { $arrayElemAt: ["$reactions_arr", -1] }
+            },
+
+        },
+        {
+            $project: {
+                post_id: 1,
+                react2: 1,
+                diff: { $subtract: ["$react2", "$react1"] }
+            }
+        },
+        { $match: { $or: [{ diff: { $gte: 1000 } }, { diff: { $gte: 500 }, react2: { $lte: 3000 } }] } },
+    ])
+    r = r.map(elm => elm.post_id).join(',')
+    return r
+}
+
+module.exports = { bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday, bestByOrderReactToday, bestByOrderReactYesterday, best1000react50order, bestReactChange }

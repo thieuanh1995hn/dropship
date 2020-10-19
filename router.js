@@ -28,8 +28,14 @@ app.get('/react-yesterday', controller.bestByReactYesterday)
 app.get('/order-react-yesterday', controller.bestByOrderReactYesterday)
 
 // 1000 react 50 order in 3 weeks
-app.get('/1000react50order',controller.get1000react50order)
-app.get('/1000react50order/u',controller.checkUnseen1000react50order)
-app.get('/1000react50order/c',controller.clearUnseen1000react50order)
+app.get('/1000react50order', controller.get1000react50order)
+app.get('/1000react50order/u', controller.checkUnseen1000react50order)
+app.get('/1000react50order/c', controller.clearUnseen1000react50order)
+
+// > 1000 change or < 3000 react > 1000 change
+app.get('/react-change', controller.bestReactChange)
+app.get('/react-change/u', controller.checkUnseenReactChange)
+app.get('/react-change/c', controller.clearUnseenReactChange)
+
 
 module.exports = { app }

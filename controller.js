@@ -43,7 +43,7 @@ async function bestByOrderYesterday(req, res) {
     res.send(output)
 }
 
-// React Today
+// 1000react50 order
 async function bestByReactToday(req, res) {
     let output = await service.bestByReactToday()
     res.send(output)
@@ -78,7 +78,7 @@ async function bestByOrderReactYesterday(req, res) {
 }
 
 async function get1000react50order(req, res) {
-    let output = await fs.readFileSync('db/over1000react50orderAll.txt', 'utf-8')
+    let output = await fs.readFileSync('db/over1000react50orderALL.txt', 'utf-8')
     res.send({ result: output })
 }
 async function checkUnseen1000react50order(req, res) {
@@ -92,11 +92,26 @@ async function clearUnseen1000react50order(req, res) {
 }
 
 
+async function bestReactChange(req, res) {
+    let output = await service.bestReactChange()
+    res.send({ result: output })
+}
 
+
+async function checkUnseenReactChange(req, res) {
+    let output = await fs.readFileSync('db/reactChange.txt', 'utf-8')
+    res.send({ result: output })
+}
+
+async function clearUnseenReactChange(req, res) {
+    let output = await fs.truncateSync('db/reactChange.txt', 0)
+    res.send({ result: output })
+}
 
 module.exports = {
     bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday,
     bestByOrderReactToday, bestByOrderReactYesterday, clearUnseen1000react50order,
     checkUnseen1000react50order, checkUnseenOrderToday, clearUnseenOrderToday, checkUnseenOrderReactToday,
-    clearUnseenOrderReactToday, checkUnseenReactToday, clearUnseenReactToday,get1000react50order
+    clearUnseenOrderReactToday, checkUnseenReactToday, clearUnseenReactToday, get1000react50order, bestReactChange,
+    checkUnseenReactChange, clearUnseenReactChange
 }
