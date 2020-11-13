@@ -275,9 +275,9 @@ async function alertReactCrawlDone(time) {
 }
 
 
-alertNewBestByOrderToday(300000);
-alertReactCrawlDone(300000);
-alertNewBestOrderReactToday(300000);
-alertOver1000react50order(300000);
-alertNewBestByReactToday(300000)
-alertBestReactChange(300000)
+alertNewBestByOrderToday(60000);
+alertReactCrawlDone(62000);
+alertNewBestOrderReactToday(64000);
+alertOver1000react50order(66000);
+alertNewBestByReactToday(68000)
+alertBestReactChange(700000)
