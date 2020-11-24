@@ -280,4 +280,4 @@ alertReactCrawlDone(62000);
 alertNewBestOrderReactToday(64000);
 alertOver1000react50order(66000);
 alertNewBestByReactToday(68000)
-alertBestReactChange(70000)
+alertBestReactChange(700000)
