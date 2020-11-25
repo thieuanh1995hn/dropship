@@ -24,13 +24,13 @@ Zemte	139.180.157.250
 	- DONE: Sealing Machine
 
 Zoxbe	149.28.159.179
-	- TODO: Pop Them All
+	- Chocolate Bomb: Pop Them All
 
 Nozdy	207.148.77.5
-	- TODO: Vòng trang sức
+	- DONE: Vòng trang sức
 
 Denpy	149.28.150.178
-	- TODO: Khoan gỗ
+	- DONE: Khoan gỗ
 
 Stack
 	- Tactical No Pull Dog Harness v2
