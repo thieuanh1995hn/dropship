@@ -5,9 +5,6 @@ Kapy 149.28.143.243
 Duppo 207.148.121.47 
 	- DONE: Chạy chân ghế
 
-Leppa.co 66.42.58.239
-	- DONE: Chạy lại mũ
-
 Lummy.co 139.180.153.219
 	- DONE: Chạy outlet wallplate
 
@@ -17,20 +14,24 @@ Gozpe	45.77.34.168
 Pamne	149.28.144.150
 	- DONE: Chạy mồm thằn lằn
 
-Zemte	139.180.157.250
-	- DONE: Sealing Machine
-
-Denpy	149.28.150.178
-	- DONE: Kính tim
-
-Zoxbe	149.28.159.179
-	- DONE: REUSABLE FOIL COVER
-
 Pemdy	139.180.145.216
-	- DONE: Pop Them All
+	- DONE: Chạy bướm
 
 Nozdy	207.148.77.5
-	- DONE: Multipurpose Holder
+	- DONE: Chạy Window Clean
+
+Denpy	149.28.150.178
+	- DONE: Chạy sạc đth
+
+Leppa	66.42.58.239
+	- DONE: Chạy cổ áo len
+
+Zoxbe	149.28.159.179
+	- TODO: Chạy bàn chải SilkoBrush
+
+Zemte	139.180.157.250
+	- TODO: Chạy Baby Water Matt
+
 
 
 
