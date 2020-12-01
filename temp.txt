@@ -10,27 +10,30 @@ Lummy.co 139.180.153.219
 
 Gozpe	45.77.34.168
 	- DONE: Chạy ép tóc
+	- DONE: Chạy Skirt Legging
 
 Pamne	149.28.144.150
 	- DONE: Chạy mồm thằn lằn
 
-Pemdy	139.180.145.216
-	- DONE: Chạy bướm
-
 Nozdy	207.148.77.5
 	- DONE: Chạy Window Clean
-
-Denpy	149.28.150.178
-	- DONE: Chạy sạc đth
 
 Leppa	66.42.58.239
 	- DONE: Chạy cổ áo len
 
-Zoxbe	149.28.159.179
-	- TODO: Chạy bàn chải SilkoBrush
-
 Zemte	139.180.157.250
-	- TODO: Chạy Baby Water Matt
+	- DONE: Chạy bàn chải SilkoBrush
+
+Zoxbe	149.28.159.179
+	- DONE: Chạy thumb phone stand
+
+Pemdy	139.180.145.216
+	- DONE: chạy áo phao cho chó
+		
+	- Denpy	149.28.150.178
+		- DONE: Chạy sạc đth
+		- TODO: 
+
 
 
 
