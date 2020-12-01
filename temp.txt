@@ -27,15 +27,16 @@ Leppa	66.42.58.239
 	- DONE: Chạy cổ áo len
 
 Zoxbe	149.28.159.179
-	- TODO: Chạy bàn chải SilkoBrush
+	- TODO: Thumbs Up Lazy Phone Stand
 
 Zemte	139.180.157.250
-	- TODO: Chạy Baby Water Matt
+	- TODO: Chạy bàn chải SilkoBrush
 
 
 
 
 Stack
+	- TODO: Baby water  mat
 	- Multipurpose Holder
 	- Tactical No Pull Dog Harness v2
 	- Super thick cashmere wool leggings
