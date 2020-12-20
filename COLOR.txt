@@ -3,3 +3,7 @@ COLOR
 Red Head:  #ff2a00 
 Green: #4c7a1a
 Blue headline: #0b5394
+Orange: #f76e5c
+Yellow: #fbb341
+Red mịn: e06666
+Tím mịn: 8e7cc3
