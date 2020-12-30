@@ -255,7 +255,7 @@ async function alertReactCrawlDone(time) {
         if (reactToday !== r) {
             await axios.post("https://slack.com/api/chat.postMessage", {
                 channel: "react",
-                text: `Sếp ơi react có rồi ạ!`,
+                text: `alo`,
                 username: 'Đệ tử ruột',
                 icon_url: "https://ca.slack-edge.com/T01CH5MVANL-U01BTC2K7L2-0a745d8aaeed-48"
             }, {
