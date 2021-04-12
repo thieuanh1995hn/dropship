@@ -7,3 +7,4 @@ Orange: #f76e5c
 Yellow: #fbb341
 Red mịn: e06666
 Tím mịn: 8e7cc3
+Đỏ Add to cart: ff4747
