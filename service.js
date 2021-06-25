@@ -1,48 +1,48 @@
 const { Ads } = require('./model')
 const moment = require('moment')
-// moment.utc().startOf('day')
+    // moment.utc().startOf('day')
 async function bestByOrderToday() {
     let output = { order100: '', order50: '', order10: '' }
     let results = await Ads.find({
-        orders: {
-            $not: {
-                $elemMatch: {
-                    statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+                    }
                 }
-            }
-        },
-        last_order: { $lt: 9999, $gte: 100 },
-    }, { post_id: 1 })
+            },
+            last_order: { $lt: 9999, $gte: 100 },
+        }, { post_id: 1 })
         .sort({
             last_order: -1
         });
     results = results.map(elm => elm.post_id).join(',')
     output.order100 = results
     results = await Ads.find({
-        orders: {
-            $not: {
-                $elemMatch: {
-                    statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+                    }
                 }
-            }
-        },
-        last_order: { $lt: 100, $gte: 50 },
-    }, { post_id: 1 })
+            },
+            last_order: { $lt: 100, $gte: 50 },
+        }, { post_id: 1 })
         .sort({
             last_order: -1
         });
     results = results.map(elm => elm.post_id).join(',')
     output.order50 = results
     results = await Ads.find({
-        orders: {
-            $not: {
-                $elemMatch: {
-                    statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+                    }
                 }
-            }
-        },
-        last_order: { $lt: 50, $gte: 10 },
-    }, { post_id: 1 })
+            },
+            last_order: { $lt: 50, $gte: 10 },
+        }, { post_id: 1 })
         .sort({
             last_order: -1
         });
@@ -54,15 +54,15 @@ async function bestByOrderToday() {
 async function bestByOrderYesterday() {
     let output = { order100: '', order50: '', order10: '' }
     let results = await Ads.find({
-        orders: {
-            $not: {
-                $elemMatch: {
-                    statistical_time: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() }
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() }
+                    }
                 }
-            }
-        },
-        last_yesterday: { $lt: 9999, $gte: 100 },
-    }, { post_id: 1 })
+            },
+            last_yesterday: { $lt: 9999, $gte: 100 },
+        }, { post_id: 1 })
         .sort({
             last_yesterday: -1
         });
@@ -70,15 +70,15 @@ async function bestByOrderYesterday() {
     output.order100 = results
 
     results = await Ads.find({
-        orders: {
-            $not: {
-                $elemMatch: {
-                    statistical_time: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() }
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() }
+                    }
                 }
-            }
-        },
-        last_yesterday: { $lt: 100, $gte: 50 },
-    }, { post_id: 1 })
+            },
+            last_yesterday: { $lt: 100, $gte: 50 },
+        }, { post_id: 1 })
         .sort({
             last_yesterday: -1
         });
@@ -86,15 +86,15 @@ async function bestByOrderYesterday() {
     output.order50 = results
 
     results = await Ads.find({
-        orders: {
-            $not: {
-                $elemMatch: {
-                    statistical_time: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() }
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() }
+                    }
                 }
-            }
-        },
-        last_yesterday: { $lt: 50, $gte: 10 },
-    }, { post_id: 1 })
+            },
+            last_yesterday: { $lt: 50, $gte: 10 },
+        }, { post_id: 1 })
         .sort({
             last_yesterday: -1
         });
@@ -109,12 +109,12 @@ async function bestByReactToday() {
 
     // 7000
     let results = await Ads.find({
-        tracking_time_arr: {
-            $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
-        },
-        action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-        reactions: { $gte: 7000 },
-    }, { post_id: 1 })
+            tracking_time_arr: {
+                $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
+            },
+            action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
+            reactions: { $gte: 7000 },
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -124,12 +124,12 @@ async function bestByReactToday() {
 
     // 3000
     results = await Ads.find({
-        tracking_time_arr: {
-            $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
-        },
-        action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-        reactions: { $lt: 7000, $gte: 3000 },
-    }, { post_id: 1 })
+            tracking_time_arr: {
+                $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
+            },
+            action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
+            reactions: { $lt: 7000, $gte: 3000 },
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -139,12 +139,12 @@ async function bestByReactToday() {
 
     // 1000
     results = await Ads.find({
-        tracking_time_arr: {
-            $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
-        },
-        action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-        reactions: { $lt: 3000, $gte: 1000 },
-    }, { post_id: 1 })
+            tracking_time_arr: {
+                $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
+            },
+            action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
+            reactions: { $lt: 3000, $gte: 1000 },
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -154,13 +154,13 @@ async function bestByReactToday() {
 
     // 500
     results = await Ads.find({
-        tracking_time_arr: {
-            $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
-        },
-        action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-        reactions: { $lt: 1000, $gte: 500 },
-        shares_reactions: { $gte: 0.2 }
-    }, { post_id: 1 })
+            tracking_time_arr: {
+                $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
+            },
+            action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
+            reactions: { $lt: 1000, $gte: 500 },
+            shares_reactions: { $gte: 0.2 }
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -172,14 +172,14 @@ async function bestByReactToday() {
 
 async function bestByReactYesterday() {
     let output = { react7000: '', react3000: '', react1000: '', react1000: '', react500: '' }
-    // 7000
+        // 7000
     let results = await Ads.find({
-        tracking_time_arr: {
-            $not: { $elemMatch: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() } }
-        },
-        action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-        reactions: { $gte: 7000 },
-    }, { post_id: 1 })
+            tracking_time_arr: {
+                $not: { $elemMatch: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() } }
+            },
+            action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
+            reactions: { $gte: 7000 },
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -189,12 +189,12 @@ async function bestByReactYesterday() {
 
     // 3000
     results = await Ads.find({
-        tracking_time_arr: {
-            $not: { $elemMatch: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() } }
-        },
-        action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-        reactions: { $lt: 7000, $gte: 3000 },
-    }, { post_id: 1 })
+            tracking_time_arr: {
+                $not: { $elemMatch: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() } }
+            },
+            action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
+            reactions: { $lt: 7000, $gte: 3000 },
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -204,12 +204,12 @@ async function bestByReactYesterday() {
 
     // 1000
     results = await Ads.find({
-        tracking_time_arr: {
-            $not: { $elemMatch: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() } }
-        },
-        action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-        reactions: { $lt: 3000, $gte: 1000 },
-    }, { post_id: 1 })
+            tracking_time_arr: {
+                $not: { $elemMatch: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() } }
+            },
+            action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
+            reactions: { $lt: 3000, $gte: 1000 },
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -219,13 +219,13 @@ async function bestByReactYesterday() {
 
     // 500
     results = await Ads.find({
-        tracking_time_arr: {
-            $not: { $elemMatch: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() } }
-        },
-        action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-        reactions: { $lt: 1000, $gte: 500 },
-        shares_reactions: { $gte: 0.2 }
-    }, { post_id: 1 })
+            tracking_time_arr: {
+                $not: { $elemMatch: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() } }
+            },
+            action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
+            reactions: { $lt: 1000, $gte: 500 },
+            shares_reactions: { $gte: 0.2 }
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -238,18 +238,18 @@ async function bestByReactYesterday() {
 
 async function bestByOrderReactToday() {
     let output = ''
-    // 7000
+
     let results = await Ads.find({
-        orders: {
-            $not: {
-                $elemMatch: {
-                    statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+                    }
                 }
-            }
-        },
-        last_order: { $gte: 10 },
-        reactions: { $gte: 1000 },
-    }, { post_id: 1 })
+            },
+            last_order: { $gte: 10 },
+            reactions: { $gte: 1000 },
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -261,18 +261,18 @@ async function bestByOrderReactToday() {
 
 async function bestByOrderReactYesterday() {
     let output = ''
-    // 7000
+        // 7000
     let results = await Ads.find({
-        orders: {
-            $not: {
-                $elemMatch: {
-                    statistical_time: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() }
+            orders: {
+                $not: {
+                    $elemMatch: {
+                        statistical_time: { $lt: moment.utc().startOf('day').subtract(1, "days").toDate() }
+                    }
                 }
-            }
-        },
-        $or: [{ last_yesterday: { $gte: 50 } }, { last_order: { $gte: 50 } }],
-        reactions: { $gte: 1000 },
-    }, { post_id: 1 })
+            },
+            $or: [{ last_yesterday: { $gte: 50 } }, { last_order: { $gte: 50 } }],
+            reactions: { $gte: 1000 },
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -282,13 +282,13 @@ async function bestByOrderReactYesterday() {
 
 async function best1000react50order() {
     let r = await Ads.find({
-        $or: [{ last_yesterday: { $gte: 50 } }, { last_order: { $gte: 50 } }],
-        reactions: { $gte: 1000 },
-        post_date: {
-            $gte: moment.utc().startOf('day').subtract(21, 'days').toDate().getTime() / 1000
-            , $lte: moment.utc().startOf('day').toDate().getTime() / 1000
-        }
-    }, { post_id: 1 })
+            $or: [{ last_yesterday: { $gte: 50 } }, { last_order: { $gte: 50 } }],
+            reactions: { $gte: 1000 },
+            post_date: {
+                $gte: moment.utc().startOf('day').subtract(21, 'days').toDate().getTime() / 1000,
+                $lte: moment.utc().startOf('day').toDate().getTime() / 1000
+            }
+        }, { post_id: 1 })
         .sort({
             reactions: -1
         });
@@ -297,14 +297,13 @@ async function best1000react50order() {
 }
 
 async function bestReactChange() {
-    let r = await Ads.aggregate([
-        {
+    let r = await Ads.aggregate([{
             $match: {
                 post_date: {
-                    $gte: moment.utc().startOf('day').subtract(21, 'days').toDate().getTime() / 1000
-                    , $lte: moment.utc().startOf('day').toDate().getTime() / 1000
+                    $gte: moment.utc().startOf('day').subtract(21, 'days').toDate().getTime() / 1000,
+                    $lte: moment.utc().startOf('day').toDate().getTime() / 1000
                 },
-                action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
+                action: { $in: ["SHOP_NOW", "GET_OFFER", "ORDER_NOW", "BUY_NOW"] },
             }
         },
         {

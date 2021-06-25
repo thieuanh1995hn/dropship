@@ -107,16 +107,16 @@ async function alertNewBestByReactToday(time) {
 async function alertNewBestOrderReactToday(time) {
     try {
         let r = await Ads.find({
-            orders: {
-                $not: {
-                    $elemMatch: {
-                        statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+                orders: {
+                    $not: {
+                        $elemMatch: {
+                            statistical_time: { $lt: moment.utc().startOf('day').toDate() }
+                        }
                     }
-                }
-            },
-            last_order: { $gte: 10 },
-            reactions: { $gte: 1000 },
-        }, { post_id: 1 })
+                },
+                last_order: { $gte: 10 },
+                reactions: { $gte: 1000 },
+            }, { post_id: 1 })
             .sort({
                 reactions: -1
             });
@@ -169,7 +169,7 @@ async function alertOver1000react50order(time) {
                     _new.push(post_id)
                 }
             }
-            
+
             if (_new.length > 0) {
                 // send message to slack
                 // await axios.post("https://slack.com/api/chat.postMessage", {
@@ -188,8 +188,7 @@ async function alertOver1000react50order(time) {
         }
         fs.writeFileSync('db/over1000react50orderALL.txt', r.join(','));
         setTimeout(() => alertOver1000react50order(time), time);
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e.stack)
         setTimeout(() => alertOver1000react50order(time), time);
     }
@@ -210,7 +209,7 @@ async function alertBestReactChange(time) {
                     _new.push(post_id)
                 }
             }
-            
+
             if (_new.length > 0) {
                 // send message to slack
                 // await axios.post("https://slack.com/api/chat.postMessage", {
@@ -229,8 +228,7 @@ async function alertBestReactChange(time) {
         }
         fs.writeFileSync('db/reactChangeALL.txt', r.join(','));
         setTimeout(() => alertBestReactChange(time), time);
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e.stack)
         setTimeout(() => alertBestReactChange(time), time);
     }
@@ -240,12 +238,12 @@ async function alertBestReactChange(time) {
 async function alertReactCrawlDone(time) {
     try {
         let r = await Ads.find({
-            tracking_time_arr: {
-                $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
-            },
-            action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
-            reactions: { $gte: 7000 },
-        }, { post_id: 1 })
+                tracking_time_arr: {
+                    $not: { $elemMatch: { $lt: moment.utc().startOf('day').toDate() } }
+                },
+                action: { $in: ["SHOP_NOW", "LEARN_MORE", "GET_OFFER"] },
+                reactions: { $gte: 7000 },
+            }, { post_id: 1 })
             .sort({
                 reactions: -1
             });
@@ -275,9 +273,9 @@ async function alertReactCrawlDone(time) {
 }
 
 
-alertNewBestByOrderToday(300000);
-alertReactCrawlDone(302000);
-alertNewBestOrderReactToday(304000);
-alertOver1000react50order(306000);
-alertNewBestByReactToday(700000)
-alertBestReactChange(700000)
+alertReactCrawlDone(216000000);
+alertNewBestByOrderToday(217000000);
+alertNewBestOrderReactToday(218000000);
+alertOver1000react50order(219000000);
+alertNewBestByReactToday(220000000)
+alertBestReactChange(221000000)
