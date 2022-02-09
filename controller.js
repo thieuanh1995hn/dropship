@@ -1,6 +1,6 @@
 const service = require('./service')
 const fs = require('fs')
-// Order Today
+    // Order Today
 async function bestByOrderToday(req, res) {
     let output = await service.bestByOrderToday()
     res.send(output)
@@ -13,7 +13,7 @@ async function checkUnseenOrderToday(req, res) {
         output.order100 = output.order100 ? output.order100.join(",") : ''
         output.order50 = output.order50 ? output.order50.join(",") : ''
     }
-    res.send({ ...output })
+    res.send({...output })
 }
 
 async function clearUnseenOrderToday(req, res) {
@@ -58,7 +58,7 @@ async function checkUnseenReactToday(req, res) {
         output.react1000 = output.react1000 ? output.react1000.join(",") : ''
         output.react500 = output.react500 ? output.react500.join(",") : ''
     }
-    res.send({ ...output })
+    res.send({...output })
 }
 
 async function clearUnseenReactToday(req, res) {
@@ -78,7 +78,7 @@ async function bestByOrderReactYesterday(req, res) {
 }
 
 async function get1000react50order(req, res) {
-    let output = await fs.readFileSync('db/over1000react50orderALL.txt', 'utf-8')
+    let output = await fs.readFileSync('db/over1000react50orderALL.txt', 'utf-8') // Nen query DB
     res.send({ result: output })
 }
 async function checkUnseen1000react50order(req, res) {
@@ -109,9 +109,22 @@ async function clearUnseenReactChange(req, res) {
 }
 
 module.exports = {
-    bestByOrderToday, bestByOrderYesterday, bestByReactToday, bestByReactYesterday,
-    bestByOrderReactToday, bestByOrderReactYesterday, clearUnseen1000react50order,
-    checkUnseen1000react50order, checkUnseenOrderToday, clearUnseenOrderToday, checkUnseenOrderReactToday,
-    clearUnseenOrderReactToday, checkUnseenReactToday, clearUnseenReactToday, get1000react50order, bestReactChange,
-    checkUnseenReactChange, clearUnseenReactChange
+    bestByOrderToday,
+    bestByOrderYesterday,
+    bestByReactToday,
+    bestByReactYesterday,
+    bestByOrderReactToday,
+    bestByOrderReactYesterday,
+    clearUnseen1000react50order,
+    checkUnseen1000react50order,
+    checkUnseenOrderToday,
+    clearUnseenOrderToday,
+    checkUnseenOrderReactToday,
+    clearUnseenOrderReactToday,
+    checkUnseenReactToday,
+    clearUnseenReactToday,
+    get1000react50order,
+    bestReactChange,
+    checkUnseenReactChange,
+    clearUnseenReactChange
 }
